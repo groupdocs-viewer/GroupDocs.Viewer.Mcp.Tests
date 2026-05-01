@@ -1,0 +1,37 @@
+# GroupDocs.Viewer.Mcp.Tests
+
+Integration tests and deployment how-to guides for GroupDocs.Viewer.Mcp — the MCP server that exposes GroupDocs.Viewer for .NET to AI agents (Claude, Cursor, VS Code / GitHub Copilot, and other MCP-compatible clients).
+
+This repo validates the **published NuGet artifact** end-to-end and doubles as a reference for using it from every supported channel.
+
+## Primary repository
+
+- MCP server source + package: https://github.com/groupdocs-viewer/GroupDocs.Viewer.Mcp
+- NuGet package: https://www.nuget.org/packages/GroupDocs.Viewer.Mcp
+- Docker images: ghcr.io/groupdocs-viewer/viewer-net-mcp and docker.io/groupdocs/viewer-net-mcp
+
+## Deployment channels covered by how-to guides
+
+- how-to/01-install-from-nuget.md — dnx (recommended) + global dotnet tool
+- how-to/02-run-via-docker.md — container image + docker-compose
+- how-to/03-verify-mcp-registry.md — MCP registry discovery and NuGet.org auto-generated mcp.json
+- how-to/04-use-with-claude-desktop.md — Claude Desktop stdio config
+- how-to/05-use-with-vscode-copilot.md — VS Code / GitHub Copilot config with prompt-string inputs
+- how-to/06-run-integration-tests.md — run this repo's test suite locally and in CI
+
+## MCP tools exposed by the server
+
+- RenderPage — render a single document page as a PNG image; returns a CallToolResult containing both a TextContentBlock (saved file path under `<source-stem>_page<N>.png`) and an ImageContentBlock (PNG bytes inline as `image/png`); takes optional `page` (1-based, default 1) and `password` for protected documents
+- GetViewInfo — inspect a single source document and return file type, page count, and per-page dimensions (number, width, height, name, visible) as JSON; no rendering performed; takes optional `password` for protected documents
+
+## Key facts for AI agents
+
+- Testing the shipped NuGet, not the source. No project reference to the server.
+- Tool names on the wire are PascalCase: RenderPage, GetViewInfo.
+- RenderPage produces watermarked output in evaluation mode (does not throw). GetViewInfo is read-only and unaffected by license state. Tests succeed in both eval and licensed mode.
+- A synthetic PDF with real visible content is generated at test startup so RenderPage's PNG output is non-trivial. Real samples (sample.docx, sample.xlsx, sample.pptx, sample.pdf, sample.png) under sample-docs/ are exercised via theories.
+- Target framework is net10.0 only. Requires .NET 10 SDK for dnx.
+
+## License
+
+MIT — see LICENSE

@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "groupdocs-viewer": {
+      "type": "stdio",
+      "command": "dnx",
+      "args": ["GroupDocs.Viewer.Mcp@26.5.0", "--yes"],
+      "env": {
+        "GROUPDOCS_MCP_STORAGE_PATH": "/absolute/path/to/documents"
+      }
+    }
+  }
+}
