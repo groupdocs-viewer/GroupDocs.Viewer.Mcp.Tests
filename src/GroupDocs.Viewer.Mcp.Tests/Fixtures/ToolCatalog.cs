@@ -21,7 +21,7 @@ internal sealed class ToolCatalog
     public IReadOnlyList<McpClientTool> All => _tools;
 
     public McpClientTool RenderPage => Resolve("render");
-    public McpClientTool ViewInfo => Resolve("viewinfo");
+    public McpClientTool ViewInfo => Resolve("view_info");
 
     private McpClientTool Resolve(string keyword) =>
         _tools.FirstOrDefault(t => t.Name.Contains(keyword, StringComparison.OrdinalIgnoreCase))
