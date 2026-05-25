@@ -131,6 +131,23 @@ GROUPDOCS_LICENSE_PATH=/secrets/GroupDocs.Total.lic \
 dnx GroupDocs.Viewer.Mcp@26.5.1 --yes
 ```
 
+## Native prerequisites
+
+The underlying GroupDocs engine uses `System.Drawing` (GDI+) for some
+operations. When you run the server **natively** (via `dnx` or the global
+dotnet tool) on Linux or macOS, install the native `libgdiplus` library first:
+
+| Platform | Setup |
+|---|---|
+| Windows | Nothing — GDI+ is built into the OS. |
+| Linux | `sudo apt-get install -y libgdiplus libfontconfig1 ttf-mscorefonts-installer` |
+| macOS | `brew install mono-libgdiplus` |
+| Docker | Nothing — the image already bundles `libgdiplus`. |
+
+Skipping this on Linux/macOS surfaces as `DllNotFoundException: libgdiplus` in
+the tool response. The simplest zero-setup option on Linux/macOS is the
+**Docker image**.
+
 ## License
 
 `get_view_info` works fine in evaluation mode. `render_page` requires a
@@ -164,6 +181,7 @@ authoritative. If you want to script-check it, see
 | First run hangs for ~30 s | Package is downloading from nuget.org into cache | Normal. Subsequent runs are fast. |
 | `No license configured. Running in evaluation mode.` | No `GROUPDOCS_LICENSE_PATH` | Expected. `RenderPage` and `GetViewInfo` both still work; `RenderPage` output is watermarked. Set the path to drop the watermark. |
 | `RenderPage` PNG has a watermark | Evaluation mode | Set `GROUPDOCS_LICENSE_PATH` to a valid `.lic` file. |
+| `DllNotFoundException: libgdiplus` (Linux / macOS) | Native graphics deps not installed | Install them — see [Native prerequisites](#native-prerequisites). Linux: `apt-get install libgdiplus …`; macOS: `brew install mono-libgdiplus`. Or run via Docker. |
 | Client can't see any tools | MCP client didn't finish `initialize` handshake before issuing `tools/list` | Check your client config — most handle this automatically. If hand-rolling, always send `notifications/initialized` after `initialize`. |
 
 ## Next steps
