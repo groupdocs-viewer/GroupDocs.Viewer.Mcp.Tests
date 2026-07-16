@@ -30,7 +30,7 @@ Create the file at the root of your workspace:
     "groupdocs-viewer": {
       "type": "stdio",
       "command": "dnx",
-      "args": ["GroupDocs.Viewer.Mcp@26.5.0", "--yes"],
+      "args": ["GroupDocs.Viewer.Mcp@26.7.0", "--yes"],
       "env": {
         "GROUPDOCS_MCP_STORAGE_PATH": "${input:storage_path}"
       }
@@ -59,7 +59,7 @@ value.
       "args": [
         "run", "--rm", "-i",
         "-v", "${workspaceFolder}/documents:/data",
-        "ghcr.io/groupdocs-viewer/viewer-net-mcp:26.5.0"
+        "ghcr.io/groupdocs-viewer/viewer-net-mcp:26.7.0"
       ]
     }
   }

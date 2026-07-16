@@ -27,7 +27,7 @@ Create the file if it doesn't exist.
     "groupdocs-viewer": {
       "type": "stdio",
       "command": "dnx",
-      "args": ["GroupDocs.Viewer.Mcp@26.5.0", "--yes"],
+      "args": ["GroupDocs.Viewer.Mcp@26.7.0", "--yes"],
       "env": {
         "GROUPDOCS_MCP_STORAGE_PATH": "/Users/you/Documents"
       }
@@ -76,7 +76,7 @@ where dnx.cmd        # Windows (from cmd)
       "args": [
         "run", "--rm", "-i",
         "-v", "/Users/you/Documents:/data",
-        "ghcr.io/groupdocs-viewer/viewer-net-mcp:26.5.0"
+        "ghcr.io/groupdocs-viewer/viewer-net-mcp:26.7.0"
       ]
     }
   }
