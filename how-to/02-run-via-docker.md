@@ -5,7 +5,7 @@ The MCP server is published as a container image to two registries:
 - `ghcr.io/groupdocs-viewer/viewer-net-mcp` — GitHub Container Registry (primary)
 - `docker.io/groupdocs/viewer-net-mcp` — Docker Hub (mirror)
 
-Each release is tagged with its version (`:26.5.0`) and `:latest`.
+Each release is tagged with its version (`:26.7.0`) and `:latest`.
 
 > **No native setup needed.** Unlike a native `dnx` / global-tool install — which
 > needs `libgdiplus` installed by hand on Linux/macOS — this Docker image already
@@ -29,7 +29,7 @@ On **Windows specifically**, Docker Desktop must have access to the drive your s
 ```bash
 docker run --rm -i \
   -v $(pwd)/documents:/data \
-  ghcr.io/groupdocs-viewer/viewer-net-mcp:26.5.0
+  ghcr.io/groupdocs-viewer/viewer-net-mcp:26.7.0
 ```
 
 - `--rm` — delete the container when it exits.
@@ -40,10 +40,10 @@ The image sets `ENV GROUPDOCS_MCP_STORAGE_PATH=/data` and declares `VOLUME /data
 
 ## Pinned vs always-latest
 
-Each release pushes both `:<version>` (e.g. `:26.5.0`) and updates `:latest` to point at it. Pick the tag that matches how you want to handle upgrades:
+Each release pushes both `:<version>` (e.g. `:26.7.0`) and updates `:latest` to point at it. Pick the tag that matches how you want to handle upgrades:
 
 ```bash
-docker pull ghcr.io/groupdocs-viewer/viewer-net-mcp:26.5.0   # pinned to exact version
+docker pull ghcr.io/groupdocs-viewer/viewer-net-mcp:26.7.0   # pinned to exact version
 docker pull ghcr.io/groupdocs-viewer/viewer-net-mcp:latest   # floats to most recent push
 ```
 
@@ -63,7 +63,7 @@ docker run --pull always --rm -i \
 
 | Tag strategy | Behaviour | Best for |
 |---|---|---|
-| `:26.5.0` | Locked to that release. No surprise upgrades. | Committed configs, CI, shared team setups. |
+| `:26.7.0` | Locked to that release. No surprise upgrades. | Committed configs, CI, shared team setups. |
 | `:latest` (default `--pull missing`) | Stays on the version you first pulled. Manual `docker pull :latest` to refresh. | Solo devs upgrading on a schedule (e.g. once a month). |
 | `:latest` + `--pull always` | Probes registry on every container start. | Always-current dev machines; tolerate +1–10s startup. |
 
@@ -88,7 +88,7 @@ Or once the server is running, the MCP `initialize` response includes `serverInf
   sleep 2
 ) | docker run --rm -i \
     -v $(pwd)/documents:/data \
-    ghcr.io/groupdocs-viewer/viewer-net-mcp:26.5.0 2>/dev/null
+    ghcr.io/groupdocs-viewer/viewer-net-mcp:26.7.0 2>/dev/null
 ```
 
 Expected: two JSON-RPC responses on stdout. The second includes `get_view_info`
@@ -101,7 +101,7 @@ A reference compose file lives at [examples/docker-compose.yml](../examples/dock
 ```yaml
 services:
   groupdocs-viewer-mcp:
-    image: ghcr.io/groupdocs-viewer/viewer-net-mcp:26.5.0
+    image: ghcr.io/groupdocs-viewer/viewer-net-mcp:26.7.0
     stdin_open: true
     tty: false
     environment:
@@ -130,7 +130,7 @@ Compose is useful for local development, but MCP clients like Claude Desktop / V
       "args": [
         "run", "--rm", "-i",
         "-v", "/absolute/path/to/documents:/data",
-        "ghcr.io/groupdocs-viewer/viewer-net-mcp:26.5.0"
+        "ghcr.io/groupdocs-viewer/viewer-net-mcp:26.7.0"
       ]
     }
   }
@@ -150,7 +150,7 @@ docker run --rm -i \
   -v $(pwd)/documents:/data \
   -v $(pwd)/secrets/GroupDocs.Total.lic:/licenses/GroupDocs.Total.lic:ro \
   -e GROUPDOCS_LICENSE_PATH=/licenses/GroupDocs.Total.lic \
-  ghcr.io/groupdocs-viewer/viewer-net-mcp:26.5.0
+  ghcr.io/groupdocs-viewer/viewer-net-mcp:26.7.0
 ```
 
 Without the license, `render_page` returns the evaluation-mode error
@@ -160,7 +160,7 @@ Without the license, `render_page` returns the evaluation-mode error
 
 ```bash
 # Inspect the image (entrypoint, env, user)
-docker inspect ghcr.io/groupdocs-viewer/viewer-net-mcp:26.5.0 \
+docker inspect ghcr.io/groupdocs-viewer/viewer-net-mcp:26.7.0 \
   --format '{{json .Config}}' | jq
 
 # Expected:
