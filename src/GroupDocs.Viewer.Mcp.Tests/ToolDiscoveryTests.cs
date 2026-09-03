@@ -4,8 +4,7 @@ using Xunit.Abstractions;
 
 namespace GroupDocs.Viewer.Mcp.IntegrationTests;
 
-[Collection(McpServerCollection.Name)]
-public class ToolDiscoveryTests
+public class ToolDiscoveryTests : IClassFixture<McpServerFixture>
 {
     private readonly McpServerFixture _fixture;
     private readonly ITestOutputHelper _output;
@@ -36,7 +35,9 @@ public class ToolDiscoveryTests
         foreach (var tool in catalog.All)
             _output.WriteLine($"tool: {tool.Name} — {tool.Description}");
 
-        Assert.Equal(2, catalog.All.Count);
+        // 2 product tools plus get_license_status, which GroupDocs.Mcp.Core
+        // registers on every server from 26.9.0.
+        Assert.Equal(3, catalog.All.Count);
         Assert.NotNull(catalog.RenderPage);
         Assert.NotNull(catalog.ViewInfo);
     }
