@@ -6,8 +6,7 @@ namespace GroupDocs.Viewer.Mcp.IntegrationTests;
 
 /// GroupDocs.Viewer.RenderPage produces output in evaluation mode (with
 /// watermarks) so happy-path assertions work in both eval and licensed mode.
-[Collection(McpServerCollection.Name)]
-public class RenderPageTests
+public class RenderPageTests : IClassFixture<McpServerFixture>
 {
     private readonly McpServerFixture _fixture;
     private readonly ITestOutputHelper _output;
